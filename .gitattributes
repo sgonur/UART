@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+*.sv  linguist-language=SystemVerilog
+*.svh linguist-language=SystemVerilog
+*.pcf linguist-detectable=false

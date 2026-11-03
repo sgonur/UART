@@ -1,0 +1,32 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Build outputs (synthesis, P&R, simulation)
+build/
+sim_build/
+*.rpt
+*.log
+
+# cocotb
+results.xml
+*.result.xml
+
+# Waveforms
+*.vcd
+*.fst
+*.fst.hier
+*.ghw
+*.gtkw.bak
+
+# Verilator
+obj_dir/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

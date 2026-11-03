@@ -1,0 +1,7 @@
+# iCEBreaker v1.x (iCE40UP5K-SG48), 12 MHz oscillator
+# Pins: https://github.com/icebreaker-fpga/icebreaker
+
+set_io -nowarn clk      35
+set_io -nowarn uart_rx   6   # FTDI TX -> FPGA RX
+set_io -nowarn uart_tx   9   # FPGA TX -> FTDI RX
+set_io -nowarn led_n    11   # LEDR_N (red, active low)
