@@ -62,7 +62,7 @@ module uart_tx #(
 
     // baud_cnt calculation
     always_ff @(posedge clk) begin
-        if (rst || state == IDLE || baud_tick)
+        if (rst || state == IDLE || baud_tick)  // Only reset when IDLE, baud_tick or reset
             baud_cnt <= '0;
         else
             baud_cnt <= baud_cnt + 1'b1;
