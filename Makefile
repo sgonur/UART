@@ -25,6 +25,14 @@ PYTHON   := $(VENV)/bin/python
 SIM      ?= icarus
 WAVES    ?= 0
 
+# FPGA tools: use OSS CAD Suite from OSS_CAD if it exists, else whatever is on PATH
+OSS_CAD  ?= /opt/oss-cad-suite
+OSS_BIN  := $(if $(wildcard $(OSS_CAD)/bin/yosys),$(OSS_CAD)/bin/)
+YOSYS    := $(OSS_BIN)yosys
+NEXTPNR  := $(OSS_BIN)nextpnr-ice40
+ICEPACK  := $(OSS_BIN)icepack
+ICEPROG  := $(OSS_BIN)iceprog
+
 .PHONY: all venv test lint synth pnr bit prog clean
 
 all: bit
@@ -52,18 +60,18 @@ pnr:   $(BUILD)/$(TOP).asc
 bit:   $(BUILD)/$(TOP).bin
 
 $(BUILD)/$(TOP).json: $(SRCS) | $(BUILD)
-	yosys -q -l $(BUILD)/yosys.log \
+	$(YOSYS) -q -l $(BUILD)/yosys.log \
 		-p 'read_verilog -sv $(SRCS); synth_ice40 -top $(TOP) -json $@'
 
 $(BUILD)/$(TOP).asc: $(BUILD)/$(TOP).json $(PCF)
-	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq $(CLK_MHZ) \
+	$(NEXTPNR) --$(DEVICE) --package $(PACKAGE) --freq $(CLK_MHZ) \
 		--json $< --pcf $(PCF) --asc $@ -l $(BUILD)/nextpnr.log
 
 $(BUILD)/$(TOP).bin: $(BUILD)/$(TOP).asc
-	icepack $< $@
+	$(ICEPACK) $< $@
 
 prog: $(BUILD)/$(TOP).bin
-	iceprog $<
+	$(ICEPROG) $<
 
 $(BUILD):
 	mkdir -p $@

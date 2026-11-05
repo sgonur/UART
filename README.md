@@ -27,6 +27,10 @@ build/          Generated outputs (git-ignored)
    This provides `yosys`, `nextpnr-ice40`, `icepack`, `iceprog`, `iverilog`,
    `verilator` and `gtkwave`.
 
+   The Makefile finds the FPGA tools in `/opt/oss-cad-suite` automatically, even
+   without sourcing. For another install location, pass
+   `OSS_CAD=/path/to/oss-cad-suite`.
+
 2. Create the Python virtual environment:
 
    ```sh
